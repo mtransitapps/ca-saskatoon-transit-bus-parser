@@ -1,2 +1,4 @@
-# ca-saskatoon-transit-bus-parser
+ca-saskatoon-transit-bus-parser
+===============================
+
 Parser for Saskatoon Transit Bus data
