@@ -127,9 +127,11 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 70: return COLOR_DART_GREEN;
 		case 75: return COLOR_DART_GREEN;
 		case 80: return COLOR_DART_GREEN;
-		case 85: return COLOR_DART_GREEN;
+		case 85: return null;
+		case 100: return null;
 		case 104: return null;
 		case 180: return null;
+		case 200: return null;
 		// @formatter:on
 		default:
 			System.out.println("Unexpected route color " + gRoute);
