@@ -129,12 +129,15 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 80: return COLOR_DART_GREEN;
 		case 85: return null;
 		case 100: return null;
+		case 101: return null;
+		case 102: return null;
+		case 103: return null;
 		case 104: return null;
 		case 180: return null;
 		case 200: return null;
 		// @formatter:on
 		default:
-			System.out.println("Unexpected route color " + gRoute);
+			System.out.printf("\nUnexpected route color %s!", gRoute);
 			System.exit(-1);
 			return null;
 		}
@@ -142,27 +145,32 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 
 	private static final String WILDWOOD = "Wildwood";
 	private static final String EXHIBITION = "Exhibition";
-	private static final String HUDSON_BAY_PARK = "Hudson Bay Park";
-	private static final String COLLEGE_PARK = "College Park";
+	private static final String HUDSON_BAY_PARK = "Hudson Bay Pk";
+	private static final String COLLEGE_PARK = "College Pk";
 	private static final String MAYFAIR = "Mayfair";
 	private static final String WILLOWGROVE_SQ = "Willowgrove Sq";
 	private static final String MC_CORMACK = "McCormack";
 	private static final String BRIARWOOD = "Briarwood";
 	private static final String _8TH_ST = "8th St";
-	private static final String RIVER_HEIGHTS = "River Heights";
+	private static final String RIVER_HEIGHTS = "River Hts";
 	private static final String AIRPORT = "Airport";
-	private static final String LAWSON_HEIGHTS = "Lawson Heights";
+	private static final String LAWSON_HEIGHTS = "Lawson Hts";
 	private static final String BROADWAY = "Broadway";
 	private static final String STONEBRIDGE = "Stonebridge";
-	private static final String MARKET_MALL = "Market Mall";
+	private static final String MARKET_MALL = "Mkt Mall";
 	private static final String MONTGOMERY = "Montgomery";
 	private static final String BLAIRMORE = "Blairmore";
-	private static final String NORTH_INDUSTRIAL = "North Industrial";
-	private static final String UNIVERSITY_FOREST_GROVE = "University / Forest Grove";
+	private static final String NORTH_INDUSTRIAL = "North Ind";
+	private static final String UNIVERSITY = "University";
+	private static final String UNIVERSITY_FOREST_GROVE = UNIVERSITY + " / Forest Grv";
 	private static final String LAKEVIEW = "Lakeview";
-	private static final String PACIFIC_HEIGHTS = "Pacific Heights";
+	private static final String PACIFIC_HEIGHTS = "Pacific Hts";
 	private static final String LAKERIDGE = "Lakeridge";
+	private static final String LAKEWOOD_SC = "Lakewood SC";
 	private static final String CONFEDERATION = "Confederation";
+	private static final String HAMPTON_VILLAGE = "Hampton Vlg";
+	private static final String SOUTHEAST = "Southeast";
+	private static final String DOWNTOWN = "Downtown";
 	private static final String CITY_CTR = "City Ctr";
 
 	@Override
@@ -251,7 +259,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (mRoute.id == 23l) {
 			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString("Hampton Village", gTrip.getDirectionId());
+				mTrip.setHeadsignString(HAMPTON_VILLAGE, gTrip.getDirectionId());
 				return;
 			} else if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(BLAIRMORE, gTrip.getDirectionId());
@@ -260,6 +268,11 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		} else if (mRoute.id == 25l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(NORTH_INDUSTRIAL, gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.id == 26l) {
+			if (gTrip.getDirectionId() == 0 && "769407".equals(gTrip.getTripId()) && "University".equals(gTrip.getTripHeadsign())) {
+				mTrip.setHeadsignString(MARKET_MALL, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 28l) {
@@ -298,14 +311,43 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CTR, gTrip.getDirectionId());
 				return;
 			}
+		} else if (mRoute.id == 100l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(SOUTHEAST, gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.id == 101l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(UNIVERSITY, gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(LAKERIDGE, gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.id == 102l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(UNIVERSITY, gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(LAKEWOOD_SC, gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.id == 103l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(UNIVERSITY, gTrip.getDirectionId());
+				return;
+			}
 		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
-	private static final Pattern CENTER = Pattern.compile("(cent(er|re))", Pattern.CASE_INSENSITIVE);
-	private static final String CENTER_REPLACEMENT = "Ctr";
-
 	private static final String VIA = " via ";
+
+	private static final Pattern INDUSTRIAL = Pattern.compile("((^|\\W){1}(industrial)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String INDUSTRIAL_REPLACEMENT = "$2Ind$4";
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
@@ -313,7 +355,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		if (indexOfVIA >= 0) {
 			tripHeadsign = tripHeadsign.substring(0, indexOfVIA);
 		}
-		tripHeadsign = CENTER.matcher(tripHeadsign).replaceAll(CENTER_REPLACEMENT);
+		tripHeadsign = INDUSTRIAL.matcher(tripHeadsign).replaceAll(INDUSTRIAL_REPLACEMENT);
+		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
 
