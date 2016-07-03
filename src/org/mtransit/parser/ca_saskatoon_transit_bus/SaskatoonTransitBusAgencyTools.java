@@ -122,6 +122,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 13: return null;
 		case 14: return null;
 		case 17: return null;
+		case 18: return null;
+		case 19: return null;
 		case 20: return null;
 		case 21: return null;
 		case 22: return null;
@@ -130,12 +132,23 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 26: return null;
 		case 28: return null;
 		case 29: return null;
+		case 30: return null;
+		case 35: return null;
+		case 40: return null;
+		case 45: return null;
 		case 50: return COLOR_DART_GREEN;
+		case 55: return null;
 		case 60: return COLOR_DART_GREEN;
+		case 65: return null;
 		case 70: return COLOR_DART_GREEN;
-		case 75: return COLOR_DART_GREEN;
+		case 75: return null;
 		case 80: return COLOR_DART_GREEN;
+		case 81: return null;
+		case 82: return null;
+		case 83: return null;
+		case 84: return null;
 		case 85: return null;
+		case 86: return null;
 		case 100: return null;
 		case 101: return null;
 		case 102: return null;
@@ -215,6 +228,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
+		}
+		if (mRoute.getId() == 3l) {
+			if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(CITY_CTR, gTrip.getDirectionId());
+				return;
+			}
 		}
 		if (mRoute.getId() == 100l) {
 			if (gTrip.getDirectionId() == 1) {
@@ -353,6 +372,16 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(MARKET_MALL, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 18l) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 19l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString("Ctr Mall", mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 22l) {
 			if (mTrip.getHeadsignId() == 0) {
 				mTrip.setHeadsignString(MONTGOMERY, mTrip.getHeadsignId());
@@ -387,12 +416,32 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 30l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(CITY_CTR, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 35l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(CITY_CTR, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 45l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(CITY_CTR, mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 50l) {
 			if (mTrip.getHeadsignId() == 0) {
 				mTrip.setHeadsignString(LAKEVIEW, mTrip.getHeadsignId());
 				return true;
 			} else if (mTrip.getHeadsignId() == 1) {
 				mTrip.setHeadsignString(PACIFIC_HEIGHTS, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 55l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 60l) {
@@ -418,9 +467,29 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CTR, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 81l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString("Ctr Mall", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 82l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString("Ctr Mall", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 84l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString("Ctr Mall", mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 85l) {
 			if (mTrip.getHeadsignId() == 1) {
 				mTrip.setHeadsignString(CITY_CTR, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 86l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString("Ctr Mall", mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 100l) {
