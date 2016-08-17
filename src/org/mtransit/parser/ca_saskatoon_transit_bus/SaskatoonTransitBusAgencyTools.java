@@ -156,6 +156,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 104: return null;
 		case 180: return null;
 		case 200: return null;
+		case 312: return null;
+		case 333: return null;
 		case 514: return null;
 		// @formatter:on
 		default:
@@ -286,6 +288,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 					return;
 				}
+			}
+		} else if (mRoute.getId() == 312l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(MARKET_MALL, gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
+				return;
 			}
 		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
