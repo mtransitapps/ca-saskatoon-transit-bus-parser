@@ -154,10 +154,32 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 102: return null;
 		case 103: return null;
 		case 104: return null;
+		case 117: return null;
 		case 180: return null;
 		case 200: return null;
+		case 305: return null;
+		case 311: return null;
 		case 312: return null;
+		case 314: return null;
+		case 315: return null;
+		case 316: return null;
+		case 325: return null;
+		case 331: return null;
+		case 332: return null;
 		case 333: return null;
+		case 334: return null;
+		case 335: return null;
+		case 336: return null;
+		case 338: return null;
+		case 339: return null;
+		case 341: return null;
+		case 342: return null;
+		case 348: return null;
+		case 349: return null;
+		case 352: return null;
+		case 354: return null;
+		case 356: return null;
+		case 358: return null;
 		case 514: return null;
 		// @formatter:on
 		default:
@@ -236,8 +258,17 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CTR, gTrip.getDirectionId());
 				return;
 			}
-		}
-		if (mRoute.getId() == 100l) {
+		} else if (mRoute.getId() == 7l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("Dundonald", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 83l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("City Ctr", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 100l) {
 			if (gTrip.getDirectionId() == 1) {
 				if ("Downtown Direct".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(SOUTHEAST, gTrip.getDirectionId());
@@ -289,12 +320,100 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					return;
 				}
 			}
+		} else if (mRoute.getId() == 311l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
 		} else if (mRoute.getId() == 312l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(MARKET_MALL, gTrip.getDirectionId());
 				return;
 			} else if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 314l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 331l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 332l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 335l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 338l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 339l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 342l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 348l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 352l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+				return;
+			}
+		} else if (mRoute.getId() == 358l) {
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString("AM", gTrip.getDirectionId());
+				return;
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString("PM", gTrip.getDirectionId());
 				return;
 			}
 		}
@@ -351,6 +470,9 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		} else if (mTrip.getRouteId() == 8l) {
 			if (mTrip.getHeadsignId() == 0) {
 				mTrip.setHeadsignString(_8TH_ST, mTrip.getHeadsignId());
+				return true;
+			} else if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 12l) {
@@ -483,7 +605,10 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 82l) {
-			if (mTrip.getHeadsignId() == 1) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString("University", mTrip.getHeadsignId());
+				return true;
+			} else if (mTrip.getHeadsignId() == 1) {
 				mTrip.setHeadsignString("Ctr Mall", mTrip.getHeadsignId());
 				return true;
 			}
