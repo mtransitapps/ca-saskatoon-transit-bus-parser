@@ -1,6 +1,7 @@
 package org.mtransit.parser.ca_saskatoon_transit_bus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.mtransit.parser.gtfs.data.GStop;
 import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.gtfs.data.GTripStop;
 import org.mtransit.parser.mt.data.MAgency;
+import org.mtransit.parser.mt.data.MDirectionType;
 import org.mtransit.parser.mt.data.MRoute;
 import org.mtransit.parser.mt.data.MTrip;
 import org.mtransit.parser.mt.data.MTripStop;
@@ -121,6 +123,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 12: return null;
 		case 13: return null;
 		case 14: return null;
+		case 15: return null;
 		case 17: return null;
 		case 18: return null;
 		case 19: return null;
@@ -174,6 +177,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 339: return null;
 		case 341: return null;
 		case 342: return null;
+		case 346: return null;
 		case 348: return null;
 		case 349: return null;
 		case 352: return null;
@@ -181,6 +185,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 356: return null;
 		case 358: return null;
 		case 514: return null;
+		case 523: return null;
 		// @formatter:on
 		default:
 			System.out.printf("\nUnexpected route color %s!\n", gRoute);
@@ -221,6 +226,62 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		map2.put(15L, new RouteTripSpec(15L, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "City Ctr", //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "South Garage") //
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5913", // Valley Road Garage
+								"3164" // 23rd Street / 2nd Avenue
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"3164", // 23rd Street / 2nd Avenue
+								"5913" // Valley Road Garage
+						})) //
+				.compileBothTripSort());
+		map2.put(346L, new RouteTripSpec(346L, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Ave W / 33rd st", //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Shaw Ctr / Bowlt") //
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5465", // Bowlt / Shaw Cente
+								"3913", // ++
+								"4018" // Avenue W / Byers
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"4005", // Avenue W / 33rd Street
+								"4307", // ++
+								"5465" // Bowlt / Shaw Center
+						})) //
+				.compileBothTripSort());
+		map2.put(523L, new RouteTripSpec(523L, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, HAMPTON_VILLAGE, //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, CONFEDERATION) //
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5465", // != Bowlt / Shaw Center
+								"5661", // ++
+								"4169", // !=
+								"3907", // ==
+								"5911", // Confederation Terminal
+								"4179", // ++
+								"3849", // ++
+								"5533" // East Hampton / McClocklin
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5533", // East Hampton / McClocklin
+								"4283", // Junor / Carrothers
+								"5767", // ++
+								"4178", // !=
+								// "5465", // != Bowlt / Shaw Center
+								// "4169", // !=
+								"3907", // ==
+								"5911" // Confederation Terminal
+						})) //
+				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -559,7 +620,10 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 45l) {
-			if (mTrip.getHeadsignId() == 1) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString("Kenderdine", mTrip.getHeadsignId());
+				return true;
+			} else if (mTrip.getHeadsignId() == 1) {
 				mTrip.setHeadsignString(CITY_CTR, mTrip.getHeadsignId());
 				return true;
 			}
