@@ -228,11 +228,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
 		map2.put(15L, new RouteTripSpec(15L, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "City Ctr", //
-				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "South Garage") //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Valley Road") //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"5913", // Valley Road Garage
-								"3164" // 23rd Street / 2nd Avenue
+								"3164", // 23rd Street / 2nd Avenue
+								"5901", // Downtown Terminal West
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
