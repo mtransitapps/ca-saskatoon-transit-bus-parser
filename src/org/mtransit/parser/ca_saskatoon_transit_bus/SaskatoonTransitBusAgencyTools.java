@@ -22,7 +22,6 @@ import org.mtransit.parser.gtfs.data.GStop;
 import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.gtfs.data.GTripStop;
 import org.mtransit.parser.mt.data.MAgency;
-import org.mtransit.parser.mt.data.MDirectionType;
 import org.mtransit.parser.mt.data.MRoute;
 import org.mtransit.parser.mt.data.MTrip;
 import org.mtransit.parser.mt.data.MTripStop;
@@ -148,6 +147,9 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 50: return COLOR_DART_GREEN;
 		case 55: return null;
 		case 60: return COLOR_DART_GREEN;
+		case 61: return null;
+		case 62: return null;
+		case 63: return null;
 		case 65: return null;
 		case 70: return COLOR_DART_GREEN;
 		case 75: return null;
@@ -158,38 +160,35 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 84: return null;
 		case 85: return null;
 		case 86: return null;
-		case 100: return null;
-		case 101: return null;
-		case 102: return null;
-		case 103: return null;
-		case 104: return null;
-		case 117: return null;
-		case 180: return null;
-		case 200: return null;
-		case 305: return null;
-		case 311: return null;
-		case 312: return null;
-		case 314: return null;
-		case 315: return null;
-		case 316: return null;
-		case 325: return null;
-		case 331: return null;
-		case 332: return null;
-		case 333: return null;
-		case 334: return null;
-		case 335: return null;
-		case 336: return null;
-		case 338: return null;
-		case 339: return null;
-		case 341: return null;
-		case 342: return null;
-		case 346: return null;
-		case 348: return null;
-		case 349: return null;
-		case 352: return null;
-		case 354: return null;
-		case 356: return null;
-		case 358: return null;
+		//
+		case 101: return SCHOOL_BUS_COLOR;
+		case 102: return SCHOOL_BUS_COLOR;
+		case 104: return SCHOOL_BUS_COLOR;
+		case 117: return SCHOOL_BUS_COLOR;
+		case 180: return SCHOOL_BUS_COLOR;
+		//
+		//
+		case 311: return SCHOOL_BUS_COLOR;
+		case 314: return SCHOOL_BUS_COLOR;
+		case 315: return SCHOOL_BUS_COLOR;
+		case 322: return SCHOOL_BUS_COLOR;
+		case 331: return SCHOOL_BUS_COLOR;
+		case 332: return SCHOOL_BUS_COLOR;
+		case 334: return SCHOOL_BUS_COLOR;
+		case 335: return SCHOOL_BUS_COLOR;
+		case 336: return SCHOOL_BUS_COLOR;
+		case 338: return SCHOOL_BUS_COLOR;
+		case 339: return SCHOOL_BUS_COLOR;
+		case 341: return SCHOOL_BUS_COLOR;
+		case 342: return SCHOOL_BUS_COLOR;
+		case 346: return SCHOOL_BUS_COLOR;
+		case 348: return SCHOOL_BUS_COLOR;
+		case 349: return SCHOOL_BUS_COLOR;
+		case 352: return SCHOOL_BUS_COLOR;
+		case 354: return SCHOOL_BUS_COLOR;
+		case 356: return SCHOOL_BUS_COLOR;
+		case 358: return SCHOOL_BUS_COLOR;
+		//
 		case 514: return null;
 		case 523: return null;
 		// @formatter:on
@@ -223,67 +222,11 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String FORESTGROVE = "Forestgrove";
 	private static final String SILVERSPRING = "Silverspring";
 	private static final String GARAGE = "Garage";
+	private static final String KENDERDINE = "Kenderdine";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(15L, new RouteTripSpec(15L, //
-				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, CITY_CENTER, //
-				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Valley Road") //
-				.addTripSort(MDirectionType.NORTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"5913", // Valley Road Garage
-								"3164", // 23rd Street / 2nd Avenue
-								"5901", // Downtown Terminal West
-						})) //
-				.addTripSort(MDirectionType.SOUTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"3164", // 23rd Street / 2nd Avenue
-								"5913" // Valley Road Garage
-						})) //
-				.compileBothTripSort());
-		map2.put(346L, new RouteTripSpec(346L, //
-				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Ave W / 33rd st", //
-				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Shaw Ctr / Bowlt") //
-				.addTripSort(MDirectionType.NORTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"5465", // Bowlt / Shaw Cente
-								"3913", // ++
-								"4018" // Avenue W / Byers
-						})) //
-				.addTripSort(MDirectionType.SOUTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"4005", // Avenue W / 33rd Street
-								"4307", // ++
-								"5465" // Bowlt / Shaw Center
-						})) //
-				.compileBothTripSort());
-		map2.put(523L, new RouteTripSpec(523L, //
-				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, HAMPTON_VILLAGE, //
-				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, CONFEDERATION) //
-				.addTripSort(MDirectionType.NORTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"5465", // != Bowlt / Shaw Center
-								"5661", // ++
-								"4169", // !=
-								"3907", // ==
-								"5911", // Confederation Terminal
-								"4179", // ++
-								"3849", // ++
-								"5533" // East Hampton / McClocklin
-						})) //
-				.addTripSort(MDirectionType.SOUTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"5533", // East Hampton / McClocklin
-								"4283", // Junor / Carrothers
-								"5767", // ++
-								"4178", // !=
-								// "5465", // != Bowlt / Shaw Center
-								// "4169", // !=
-								"3907", // ==
-								"5911" // Confederation Terminal
-						})) //
-				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -315,129 +258,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
-		}
-		if (mRoute.getId() == 101l) {
-			if ("University Direct 1".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString(UNIVERSITY, gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString(LAKERIDGE, gTrip.getDirectionId());
-					return;
-				}
-			}
-		}
-		if (mRoute.getId() == 311l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		}
-		if (mRoute.getId() == 314l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 331l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 332l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 335l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 338l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 339l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 342l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 348l) {
-			if (gTrip.getDirectionId() == 0) {
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 352l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
-		} else if (mRoute.getId() == 358l) {
-			if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-				if (gTrip.getDirectionId() == 0) {
-					mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-					return;
-				} else if (gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-					return;
-				}
-			}
 		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
@@ -581,13 +401,49 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
+			} else if (Arrays.asList( //
+					"", //
+					KENDERDINE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(KENDERDINE, mTrip.getHeadsignId());
+				return true;
 			}
 		} else if (mTrip.getRouteId() == 60l) {
 			if (Arrays.asList( //
-					CITY_CENTER, //
-					CONFEDERATION_TERMINAL //
+					CONFEDERATION_TERMINAL, //
+					CITY_CENTER //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 61l) {
+			if (Arrays.asList( //
+					CONFEDERATION_TERMINAL, //
+					CITY_CENTER //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 62l) {
+			if (Arrays.asList( //
+					CONFEDERATION_TERMINAL, //
+					CITY_CENTER //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				return true;
+			} else if (Arrays.asList( //
+					CONFEDERATION_TERMINAL, //
+					MONTGOMERY //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(MONTGOMERY, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 63l) {
+			if (Arrays.asList( //
+					CONFEDERATION_TERMINAL, //
+					HAMPTON_VILLAGE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(HAMPTON_VILLAGE, mTrip.getHeadsignId());
 				return true;
 			}
 		}
