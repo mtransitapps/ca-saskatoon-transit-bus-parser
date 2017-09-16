@@ -565,10 +565,19 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 40l) {
+			if (Arrays.asList( //
+					CITY_CENTER, //
+					UNIVERSITY //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 45l) {
 			if (Arrays.asList( //
 					CITY_CENTER, //
-					GARAGE //
+					GARAGE, //
+					UNIVERSITY //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
