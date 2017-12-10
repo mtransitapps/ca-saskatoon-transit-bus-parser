@@ -93,7 +93,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		return Long.parseLong(gRoute.getRouteShortName().trim()); // using route short name as route ID
 	}
 
-
 	@Override
 	public String getRouteShortName(GRoute gRoute) {
 		return String.valueOf(Integer.parseInt(gRoute.getRouteShortName().trim())); // remove leading '0'
@@ -232,6 +231,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String SILVERSPRING = "Silverspring";
 	private static final String GARAGE = "Garage";
 	private static final String KENDERDINE = "Kenderdine";
+	private static final String KENSINGTON = "Kensington";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
@@ -394,6 +394,19 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 						return;
 					} else if (gTrip.getDirectionId() == 1) {
 						mTrip.setHeadsignString("PM", gTrip.getDirectionId());
+						return;
+					}
+				}
+			}
+		}
+		if (isGoodEnoughAccepted()) {
+			if (mRoute.getId() == 1225L) {
+				if (StringUtils.isEmpty(gTrip.getTripHeadsign())) {
+					if (gTrip.getDirectionId() == 0) {
+						mTrip.setHeadsignString("CW", gTrip.getDirectionId());
+						return;
+					} else if (gTrip.getDirectionId() == 1) {
+						mTrip.setHeadsignString("CCW", gTrip.getDirectionId());
 						return;
 					}
 				}
@@ -567,6 +580,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (mTrip.getRouteId() == 40l) {
 			if (Arrays.asList( //
+					StringUtils.EMPTY, //
 					CITY_CENTER, //
 					UNIVERSITY //
 					).containsAll(headsignsValues)) {
@@ -604,9 +618,10 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 61l) {
+		} else if (mTrip.getRouteId() == 61L) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, //
+					HAMPTON_VILLAGE, //
 					CITY_CENTER //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
@@ -635,9 +650,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(HAMPTON_VILLAGE, mTrip.getHeadsignId());
 				return true;
 			}
-		}
-		if (isGoodEnoughAccepted()) {
-			return super.mergeHeadsign(mTrip, mTripToMerge);
+		} else if (mTrip.getRouteId() == 65L) {
+			if (Arrays.asList( //
+					CONFEDERATION_TERMINAL, //
+					KENSINGTON //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(KENSINGTON, mTrip.getHeadsignId());
+				return true;
+			}
 		}
 		System.out.printf("\nUnexpected trips to merge %s and %s.\n", mTrip, mTripToMerge);
 		System.exit(-1);
