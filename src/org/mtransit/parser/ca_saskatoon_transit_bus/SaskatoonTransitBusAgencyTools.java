@@ -242,7 +242,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public int compareEarly(long routeId, List<MTripStop> list1, List<MTripStop> list2, MTripStop ts1, MTripStop ts2, GStop ts1GStop, GStop ts2GStop) {
 		if (ALL_ROUTE_TRIPS2.containsKey(routeId)) {
-			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
+			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop, this);
 		}
 		return super.compareEarly(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
 	}
@@ -258,7 +258,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public Pair<Long[], Integer[]> splitTripStop(MRoute mRoute, GTrip gTrip, GTripStop gTripStop, ArrayList<MTrip> splitTrips, GSpec routeGTFS) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
-			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()));
+			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()), this);
 		}
 		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
 	}
@@ -420,6 +420,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
 		if (mTrip.getRouteId() == 4l) {
 			if (Arrays.asList( //
+					StringUtils.EMPTY, //
 					CITY_CENTER, //
 					UNIVERSITY, //
 					MAYFAIR //
@@ -427,6 +428,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(MAYFAIR, mTrip.getHeadsignId());
 				return true;
 			} else if (Arrays.asList( //
+					StringUtils.EMPTY, //
 					CITY_CENTER, //
 					WILLOWGROVE, //
 					WILLOWGROVE_SQUARE //
@@ -443,6 +445,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			} else if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, // SAME
+					"Meadowgreen", //
 					MC_CORMACK //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(MC_CORMACK, mTrip.getHeadsignId());
@@ -463,7 +466,13 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					CITY_CENTER, //
 					DOWNTOWN //
 					).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId());
+				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); // CITY_CENTER
+				return true;
+			} else if (Arrays.asList( //
+					"Briarwood", //
+					CENTRE_MALL //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 12l) {
@@ -494,12 +503,28 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(LAWSON_HEIGHTS, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 14L) {
+			if (Arrays.asList( //
+					"Exhibition", //
+					"North Ind" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("North Ind", mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 15L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					CITY_CENTER //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 17L) {
+			if (Arrays.asList( //
+					StringUtils.EMPTY, //
+					STONEBRIDGE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(STONEBRIDGE, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 18L) {
@@ -567,6 +592,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					CITY_CENTER //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				return true;
+			} else if (Arrays.asList( //
+					StringUtils.EMPTY, //
+					LAWSON_HEIGHTS //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(LAWSON_HEIGHTS, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 35l) {
@@ -658,6 +689,30 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(KENSINGTON, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 81L) {
+			if (Arrays.asList( //
+					StringUtils.EMPTY, //
+					UNIVERSITY //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 82L) {
+			if (Arrays.asList( //
+					StringUtils.EMPTY, //
+					CENTRE_MALL //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 84L) {
+			if (Arrays.asList( //
+					StringUtils.EMPTY, //
+					"Briarwood" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Briarwood", mTrip.getHeadsignId());
+				return true;
+			}
 		}
 		System.out.printf("\nUnexpected trips to merge %s and %s.\n", mTrip, mTripToMerge);
 		System.exit(-1);
@@ -669,6 +724,9 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern INDUSTRIAL = Pattern.compile("((^|\\W){1}(industrial)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String INDUSTRIAL_REPLACEMENT = "$2Ind$4";
 
+	private static final Pattern CENTRE_ = Pattern.compile("((^|\\W){1}(cenrtre)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String CENTRE_REPLACEMENT = "$2Ctr$4";
+
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
 		int indexOfVIA = tripHeadsign.toLowerCase(Locale.ENGLISH).indexOf(VIA);
@@ -676,6 +734,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			tripHeadsign = tripHeadsign.substring(0, indexOfVIA);
 		}
 		tripHeadsign = INDUSTRIAL.matcher(tripHeadsign).replaceAll(INDUSTRIAL_REPLACEMENT);
+		tripHeadsign = CENTRE_.matcher(tripHeadsign).replaceAll(CENTRE_REPLACEMENT);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
