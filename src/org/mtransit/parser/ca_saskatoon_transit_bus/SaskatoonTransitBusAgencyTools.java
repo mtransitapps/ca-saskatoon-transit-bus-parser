@@ -236,6 +236,30 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		map2.put(5L, new RouteTripSpec(5L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, MC_CORMACK, //
+				1, MTrip.HEADSIGN_TYPE_STRING, CITY_CENTER) //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"3168", // 24th Street / 6th Avenue
+								"3586", // !=
+								"5901", // <> Downtown Terminal West
+								"3143", // !=
+								"3144", // 23rd Street / Avenue C
+								"5911", // Confederation Terminal
+								"3843", // McCormack / Fairlight
+								"3839", // McCormack / Parr
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"3839", // McCormack / Parr
+								"5912", // Confederation Terminal
+								"3159", // ==
+								"5901", // != <> Downtown Terminal West => END
+								"5902", // != Downtown Terminal East => CONTINUE
+								"3168", // 24th Street / 6th Avenue
+						})) //
+				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -436,14 +460,15 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WILLOWGROVE_SQUARE, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 5l) {
+		} else if (mTrip.getRouteId() == 5L) {
 			if (Arrays.asList( //
-					CITY_CENTER, //
+					CITY_CENTER, // SAME
 					CONFEDERATION_TERMINAL // SAME
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			} else if (Arrays.asList( //
+					CITY_CENTER, // SAME
 					CONFEDERATION_TERMINAL, // SAME
 					"Meadowgreen", //
 					MC_CORMACK //
