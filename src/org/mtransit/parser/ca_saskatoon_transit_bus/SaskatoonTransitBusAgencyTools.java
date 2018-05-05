@@ -264,6 +264,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
+	public String cleanStopOriginalId(String gStopId) {
+		gStopId = CleanUtils.cleanMergedID(gStopId);
+		return gStopId;
+	}
+
+	@Override
 	public int compareEarly(long routeId, List<MTripStop> list1, List<MTripStop> list2, MTripStop ts1, MTripStop ts2, GStop ts1GStop, GStop ts2GStop) {
 		if (ALL_ROUTE_TRIPS2.containsKey(routeId)) {
 			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop, this);
