@@ -260,6 +260,22 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 								"3168", // 24th Street / 6th Avenue
 						})) //
 				.compileBothTripSort());
+		map2.put(808L, new RouteTripSpec(808L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Field House", //
+				1, MTrip.HEADSIGN_TYPE_STRING, CITY_CENTER) //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"5899", // Downtown Terminal North
+								"3168", // ++
+								"3739", // Preston / 108th Street
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"5480", // Luther Tower
+								"5637", // ++
+								"5899", // Downtown Terminal North
+						})) //
+				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
