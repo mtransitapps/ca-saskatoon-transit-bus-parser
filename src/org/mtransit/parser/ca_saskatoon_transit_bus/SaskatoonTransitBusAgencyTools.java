@@ -255,7 +255,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 						"3839", // McCormack / Parr
 								"5912", // Confederation Terminal
 								"3159", // ==
-								"5413", // != <> Downtown Terminal West1 => CONTINUE
+								"5413", // != <> Downtown Terminal West1 =>
+								"5414", // != Downtown Terminal East 2
 								"3293", // 24th Street / 4th Avenue
 								"3168", // 24th Street / 6th Avenue
 						})) //
