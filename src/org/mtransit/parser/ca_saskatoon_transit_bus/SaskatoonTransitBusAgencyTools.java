@@ -93,9 +93,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		return MAgency.ROUTE_TYPE_BUS;
 	}
 
+	private HashMap<Long, Long> routeIdsToShortName = new HashMap<Long, Long>();
+
 	@Override
 	public long getRouteId(GRoute gRoute) {
-		return Long.parseLong(gRoute.getRouteShortName().trim()); // using route short name as route ID
+		routeIdsToShortName.put(super.getRouteId(gRoute), Long.parseLong(gRoute.getRouteShortName().trim()));
+		return super.getRouteId(gRoute); // keep original route ID to match with GTFS Real-Time Alerts
 	}
 
 	@Override
@@ -144,11 +147,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 23: return null;
 		case 25: return null;
 		case 26: return null;
+		case 27: return null;
 		case 28: return null;
 		case 29: return null;
 		case 30: return null;
 		case 35: return null;
 		case 40: return null;
+		case 44: return null;
+		case 43: return null;
 		case 45: return null;
 		case 50: return COLOR_DART_GREEN;
 		case 55: return null;
@@ -172,7 +178,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 104: return SCHOOL_BUS_COLOR;
 		case 117: return SCHOOL_BUS_COLOR;
 		case 180: return SCHOOL_BUS_COLOR;
-		//
 		//
 		case 311: return SCHOOL_BUS_COLOR;
 		case 314: return SCHOOL_BUS_COLOR;
@@ -198,11 +203,10 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		//
 		case 514: return null;
 		case 523: return null;
+		//
+		case 808: return null;
 		// @formatter:on
 		default:
-			if (isGoodEnoughAccepted()) {
-				return null;
-			}
 			System.out.printf("\nUnexpected route color %s!\n", gRoute);
 			System.exit(-1);
 			return null;
@@ -225,8 +229,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String MONTGOMERY = "Montgomery";
 	private static final String BLAIRMORE = "Blairmore";
 	private static final String UNIVERSITY = "University";
-	private static final String LAKERIDGE = "Lakeridge";
-	private static final String LAKEWOOD_SC = "Lakewood SC";
 	private static final String CONFEDERATION = "Confederation";
 	private static final String CONFEDERATION_TERMINAL = CONFEDERATION + " Terminal";
 	private static final String HAMPTON_VILLAGE = "Hampton Vlg";
@@ -241,47 +243,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(5L, new RouteTripSpec(5L, //
-				0, MTrip.HEADSIGN_TYPE_STRING, MC_CORMACK, //
-				1, MTrip.HEADSIGN_TYPE_STRING, CITY_CENTER) //
-				.addTripSort(0, //
-						Arrays.asList(new String[] { //
-						"3168", // 24th Street / 6th Avenue
-								"3586", // !=
-								"5413", // <> Downtown Terminal West1
-								"3143", // !=
-								"3144", // 23rd Street / Avenue C
-								"5911", // Confederation Terminal
-								"3843", // McCormack / Fairlight
-								"3839", // McCormack / Parr
-						})) //
-				.addTripSort(1, //
-						Arrays.asList(new String[] { //
-						"3839", // McCormack / Parr
-								"5912", // Confederation Terminal
-								"3159", // ==
-								"5413", // != <> Downtown Terminal West1 =>
-								"5414", // != Downtown Terminal East 2
-								"3293", // 24th Street / 4th Avenue
-								"3168", // 24th Street / 6th Avenue
-						})) //
-				.compileBothTripSort());
-		map2.put(808L, new RouteTripSpec(808L, //
-				0, MTrip.HEADSIGN_TYPE_STRING, "Field House", //
-				1, MTrip.HEADSIGN_TYPE_STRING, CITY_CENTER) //
-				.addTripSort(0, //
-						Arrays.asList(new String[] { //
-						"5899", // Downtown Terminal North
-								"3168", // ++
-								"3739", // Preston / 108th Street
-						})) //
-				.addTripSort(1, //
-						Arrays.asList(new String[] { //
-						"5480", // Luther Tower
-								"5637", // ++
-								"5899", // Downtown Terminal North
-						})) //
-				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -320,157 +281,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 61L) {
-				if (StringUtils.EMPTY.equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString(BLAIRMORE, gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 83L) {
-				if (StringUtils.EMPTY.equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString(STONEBRIDGE, gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 101l) {
-				if ("University Direct 1".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString(UNIVERSITY, gTrip.getDirectionId());
-						return;
-					} else if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString(LAKERIDGE, gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 102l) {
-				if ("University".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString(UNIVERSITY, gTrip.getDirectionId());
-						return;
-					}
-				}
-				if ("University Direct 2".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString(LAKEWOOD_SC, gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 311l) {
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-						return;
-					} else if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 332L) {
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-						return;
-					} else if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 336L) {
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-						return;
-					}
-				}
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign()) //
-						|| "Centre Mall".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 338L) {
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-						return;
-					} else if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 352L) {
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-						return;
-					} else if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 358L) {
-				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString("AM", gTrip.getDirectionId());
-						return;
-					} else if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString("PM", gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
-		if (isGoodEnoughAccepted()) {
-			if (mRoute.getId() == 1225L) {
-				if (StringUtils.isEmpty(gTrip.getTripHeadsign())) {
-					if (gTrip.getDirectionId() == 0) {
-						mTrip.setHeadsignString("CW", gTrip.getDirectionId());
-						return;
-					} else if (gTrip.getDirectionId() == 1) {
-						mTrip.setHeadsignString("CCW", gTrip.getDirectionId());
-						return;
-					}
-				}
-			}
-		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
 	@Override
 	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
-		if (mTrip.getRouteId() == 4L) {
+		long rsn = routeIdsToShortName.get(mTrip.getRouteId()); // mTrip.getRouteId()
+		if (rsn == 4L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, // ==
 					CITY_CENTER // ==
@@ -501,7 +319,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WILLOWGROVE_SQUARE, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 5L) {
+		} else if (rsn == 5L) {
 			if (Arrays.asList( //
 					CITY_CENTER, // SAME
 					CONFEDERATION_TERMINAL // SAME
@@ -517,17 +335,30 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(MC_CORMACK, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 6l) {
+		} else if (rsn == 6L) {
 			if (isGoodEnoughAccepted()) {
 				if (mTrip.getHeadsignId() == 0) {
-					mTrip.setHeadsignString(BROADWAY, mTrip.getHeadsignId());
-					return true;
+					if (Arrays.asList( //
+							MARKET_MALL, // ==
+							BROADWAY, // ==
+							UNIVERSITY, // !=
+							CITY_CENTER // ==
+							).containsAll(headsignsValues)) {
+						mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+						return true;
+					}
 				} else if (mTrip.getHeadsignId() == 1) {
-					mTrip.setHeadsignString(MARKET_MALL, mTrip.getHeadsignId());
-					return true;
+					if (Arrays.asList( //
+							CITY_CENTER, // ==
+							BROADWAY, // ==
+							MARKET_MALL // ==
+							).containsAll(headsignsValues)) {
+						mTrip.setHeadsignString(MARKET_MALL, mTrip.getHeadsignId());
+						return true;
+					}
 				}
 			}
-		} else if (mTrip.getRouteId() == 8l) {
+		} else if (rsn == 8l) {
 			if (Arrays.asList( //
 					CITY_CENTER, //
 					DOWNTOWN //
@@ -541,7 +372,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 12l) {
+		} else if (rsn == 12l) {
 			if (Arrays.asList( //
 					AIRPORT, //
 					CITY_CENTER //
@@ -555,7 +386,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(RIVER_HEIGHTS, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 13l) {
+		} else if (rsn == 13l) {
 			if (Arrays.asList( //
 					BROADWAY, //
 					UNIVERSITY //
@@ -569,7 +400,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(LAWSON_HEIGHTS, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 14L) {
+		} else if (rsn == 14L) {
 			if (Arrays.asList( //
 					"Exhibition", //
 					"North Ind" //
@@ -577,7 +408,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString("North Ind", mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 15L) {
+		} else if (rsn == 15L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					CITY_CENTER //
@@ -585,7 +416,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 17L) {
+		} else if (rsn == 17L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					STONEBRIDGE //
@@ -593,7 +424,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(STONEBRIDGE, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 18L) {
+		} else if (rsn == 18L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					UNIVERSITY //
@@ -601,7 +432,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 19l) {
+		} else if (rsn == 19l) {
 			if (Arrays.asList( //
 					CENTRE_MALL, //
 					MARKET_MALL //
@@ -609,7 +440,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 22l) {
+		} else if (rsn == 22l) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, // SAME
 					MONTGOMERY //
@@ -629,7 +460,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 23l) {
+		} else if (rsn == 23l) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, //
 					HAMPTON_VILLAGE //
@@ -643,7 +474,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(BLAIRMORE, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 27L) {
+		} else if (rsn == 27L) {
 			if (Arrays.asList( //
 					SILVERSPRING, //
 					"Evergreen" //
@@ -651,7 +482,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString("Evergreen", mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 28l) {
+		} else if (rsn == 28l) {
 			if (Arrays.asList( //
 					FORESTGROVE, //
 					SILVERSPRING //
@@ -659,7 +490,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(SILVERSPRING, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 30L) {
+		} else if (rsn == 30L) {
 			if (Arrays.asList( //
 					LAWSON_HEIGHTS, //
 					LAWSON_TERMINAL, //
@@ -674,7 +505,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(LAWSON_HEIGHTS, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 35l) {
+		} else if (rsn == 35l) {
 			if (Arrays.asList( //
 					CITY_CENTER, //
 					LAWSON_HEIGHTS, //
@@ -683,7 +514,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 40l) {
+		} else if (rsn == 40l) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					CITY_CENTER, //
@@ -692,7 +523,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 45l) {
+		} else if (rsn == 45l) {
 			if (Arrays.asList( //
 					CITY_CENTER, //
 					GARAGE, //
@@ -707,7 +538,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(KENDERDINE, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 50L) {
+		} else if (rsn == 50L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					UNIVERSITY //
@@ -715,7 +546,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 60L) {
+		} else if (rsn == 60L) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, //
 					CITY_CENTER, //
@@ -724,7 +555,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 61L) {
+		} else if (rsn == 61L) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, //
 					HAMPTON_VILLAGE, //
@@ -734,7 +565,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 62L) {
+		} else if (rsn == 62L) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, // ==
 					StringUtils.EMPTY // ==
@@ -757,7 +588,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(MONTGOMERY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 63L) {
+		} else if (rsn == 63L) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, //
 					HAMPTON_VILLAGE //
@@ -765,7 +596,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(HAMPTON_VILLAGE, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 65L) {
+		} else if (rsn == 65L) {
 			if (Arrays.asList( //
 					CITY_CENTER, // ==
 					CONFEDERATION_TERMINAL, //
@@ -780,7 +611,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 81L) {
+		} else if (rsn == 81L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					UNIVERSITY //
@@ -788,7 +619,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 82L) {
+		} else if (rsn == 82L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					CENTRE_MALL //
@@ -796,7 +627,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 84L) {
+		} else if (rsn == 84L) {
 			if (Arrays.asList( //
 					StringUtils.EMPTY, //
 					"Briarwood" //
