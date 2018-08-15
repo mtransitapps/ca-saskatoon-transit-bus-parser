@@ -221,6 +221,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String AIRPORT = "Airport";
 	private static final String LAWSON = "Lawson";
 	private static final String LAWSON_HEIGHTS = LAWSON + " Hts";
+	private static final String LAWSON_HEIGHTS_TERMINAL = LAWSON_HEIGHTS + " Terminal";
 	private static final String LAWSON_TERMINAL = LAWSON + " Terminal";
 	private static final String BROADWAY = "Broadway";
 	private static final String STONEBRIDGE = "Stonebridge";
@@ -234,11 +235,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String HAMPTON_VILLAGE = "Hampton Vlg";
 	private static final String DOWNTOWN = "Downtown";
 	private static final String CITY_CENTER = "City Ctr";
-	private static final String FORESTGROVE = "Forestgrove";
+	private static final String FOREST_GROVE = "Forest Grv";
 	private static final String SILVERSPRING = "Silverspring";
 	private static final String GARAGE = "Garage";
 	private static final String KENDERDINE = "Kenderdine";
 	private static final String KENSINGTON = "Kensington";
+	private static final String CIVIC_OPERATIONS_CENTER = "Civic Operations Ctr";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
@@ -321,14 +323,15 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (rsn == 5L) {
 			if (Arrays.asList( //
-					CITY_CENTER, // SAME
-					CONFEDERATION_TERMINAL // SAME
+					CITY_CENTER, // ==
+					CONFEDERATION_TERMINAL // ==
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			} else if (Arrays.asList( //
-					CITY_CENTER, // SAME
-					CONFEDERATION_TERMINAL, // SAME
+					CITY_CENTER, // ==
+					CONFEDERATION_TERMINAL, // ==
+					CIVIC_OPERATIONS_CENTER, //
 					"Meadowgreen", //
 					MC_CORMACK //
 					).containsAll(headsignsValues)) {
@@ -358,7 +361,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					}
 				}
 			}
-		} else if (rsn == 8l) {
+		} else if (rsn == 8L) {
 			if (Arrays.asList( //
 					CITY_CENTER, //
 					DOWNTOWN //
@@ -367,9 +370,18 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			} else if (Arrays.asList( //
 					"Briarwood", //
+					"8th St", //
 					CENTRE_MALL //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (rsn == 10L) {
+			if (Arrays.asList( //
+					CIVIC_OPERATIONS_CENTER, //
+					CITY_CENTER //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 12l) {
@@ -386,7 +398,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(RIVER_HEIGHTS, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 13l) {
+		} else if (rsn == 13L) {
 			if (Arrays.asList( //
 					BROADWAY, //
 					UNIVERSITY //
@@ -395,6 +407,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			} else if (Arrays.asList( //
 					UNIVERSITY, //
+					LAWSON_HEIGHTS_TERMINAL, //
 					LAWSON_HEIGHTS //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(LAWSON_HEIGHTS, mTrip.getHeadsignId());
@@ -474,6 +487,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(BLAIRMORE, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (rsn == 26L) {
+			if (Arrays.asList( //
+					FOREST_GROVE, // ==
+					UNIVERSITY //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (rsn == 27L) {
 			if (Arrays.asList( //
 					SILVERSPRING, //
@@ -482,9 +503,9 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString("Evergreen", mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 28l) {
+		} else if (rsn == 28L) {
 			if (Arrays.asList( //
-					FORESTGROVE, //
+					FOREST_GROVE, //
 					SILVERSPRING //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(SILVERSPRING, mTrip.getHeadsignId());
@@ -599,13 +620,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		} else if (rsn == 65L) {
 			if (Arrays.asList( //
 					CITY_CENTER, // ==
-					CONFEDERATION_TERMINAL, //
+					CONFEDERATION_TERMINAL, // ==
 					KENSINGTON //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(KENSINGTON, mTrip.getHeadsignId());
 				return true;
 			} else if (Arrays.asList( //
 					CITY_CENTER, // ==
+					CONFEDERATION_TERMINAL, // ==
 					UNIVERSITY //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
@@ -649,6 +671,9 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern CENTRE_ = Pattern.compile("((^|\\W){1}(cenrtre)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String CENTRE_REPLACEMENT = "$2Ctr$4";
 
+	private static final Pattern CONFEDERATION_ = Pattern.compile("((^|\\W){1}(confederartion)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String CONFEDERATION_REPLACEMENT = "$2" + CONFEDERATION + "$4";
+
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
 		int indexOfVIA = tripHeadsign.toLowerCase(Locale.ENGLISH).indexOf(VIA);
@@ -656,6 +681,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			tripHeadsign = tripHeadsign.substring(0, indexOfVIA);
 		}
 		tripHeadsign = INDUSTRIAL.matcher(tripHeadsign).replaceAll(INDUSTRIAL_REPLACEMENT);
+		tripHeadsign = CONFEDERATION_.matcher(tripHeadsign).replaceAll(CONFEDERATION_REPLACEMENT);
 		tripHeadsign = CENTRE_.matcher(tripHeadsign).replaceAll(CENTRE_REPLACEMENT);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
