@@ -186,6 +186,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 325: return SCHOOL_BUS_COLOR;
 		case 331: return SCHOOL_BUS_COLOR;
 		case 332: return SCHOOL_BUS_COLOR;
+		case 333: return SCHOOL_BUS_COLOR;
 		case 334: return SCHOOL_BUS_COLOR;
 		case 335: return SCHOOL_BUS_COLOR;
 		case 336: return SCHOOL_BUS_COLOR;
@@ -234,7 +235,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String CONFEDERATION_TERMINAL = CONFEDERATION + " Terminal";
 	private static final String HAMPTON_VILLAGE = "Hampton Vlg";
 	private static final String DOWNTOWN = "Downtown";
-	private static final String CITY_CENTER = "City Ctr";
+	private static final String CITY = "City";
+	private static final String CITY_CENTER = CITY + " Ctr";
 	private static final String FOREST_GROVE = "Forest Grv";
 	private static final String SILVERSPRING = "Silverspring";
 	private static final String GARAGE = "Garage";
@@ -668,6 +670,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern INDUSTRIAL = Pattern.compile("((^|\\W){1}(industrial)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String INDUSTRIAL_REPLACEMENT = "$2Ind$4";
 
+	private static final Pattern FOREST_GROVE_ = Pattern.compile("((^|\\W){1}(forestgrove)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String FOREST_GROVE_REPLACEMENT = "$2" + FOREST_GROVE + "$4";
+
+	private static final Pattern CITY_ = Pattern.compile("((^|\\W){1}(ciity)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String CITY_REPLACEMENT = "$2" + CITY + "$4";
+
 	private static final Pattern CENTRE_ = Pattern.compile("((^|\\W){1}(cenrtre)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String CENTRE_REPLACEMENT = "$2Ctr$4";
 
@@ -682,6 +690,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		}
 		tripHeadsign = INDUSTRIAL.matcher(tripHeadsign).replaceAll(INDUSTRIAL_REPLACEMENT);
 		tripHeadsign = CONFEDERATION_.matcher(tripHeadsign).replaceAll(CONFEDERATION_REPLACEMENT);
+		tripHeadsign = FOREST_GROVE_.matcher(tripHeadsign).replaceAll(FOREST_GROVE_REPLACEMENT);
+		tripHeadsign = CITY_.matcher(tripHeadsign).replaceAll(CITY_REPLACEMENT);
 		tripHeadsign = CENTRE_.matcher(tripHeadsign).replaceAll(CENTRE_REPLACEMENT);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
