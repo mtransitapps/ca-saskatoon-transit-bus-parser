@@ -243,10 +243,31 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String KENDERDINE = "Kenderdine";
 	private static final String KENSINGTON = "Kensington";
 	private static final String CIVIC_OPERATIONS_CENTER = "Civic Operations Ctr";
+	private static final String NORTH_INDUSTRIAL = "North Ind";
+	private static final String SASK_TEL_CENTER = "Sask Tel Ctr";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		map2.put(10260L, new RouteTripSpec(10260L, // 25
+				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
+				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"3459", // Millar / 60th Street #NorthInd
+								"3346", // ++
+								"5588", // Apex / Bill Hunter #SaskTelCtr
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"5588", // Apex / Bill Hunter #SaskTelCtr
+								"5573", // ==
+								"3804", // !=
+								"4381", // !=
+								"4440", // ==
+								"3459", // Millar / 60th Street #NorthInd
+						})) //
+				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -418,9 +439,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		} else if (rsn == 14L) {
 			if (Arrays.asList( //
 					"Exhibition", //
-					"North Ind" //
-			).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString("North Ind", mTrip.getHeadsignId());
+					NORTH_INDUSTRIAL).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(NORTH_INDUSTRIAL, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 15L) {
@@ -453,6 +473,13 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					MARKET_MALL //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
+				return true;
+			}
+			if (Arrays.asList( //
+					"Cross/Murray/Bowman", //
+					CITY_CENTER //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 22l) {
