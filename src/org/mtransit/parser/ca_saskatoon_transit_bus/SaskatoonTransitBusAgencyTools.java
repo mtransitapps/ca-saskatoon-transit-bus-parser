@@ -176,6 +176,10 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 102: return SCHOOL_BUS_COLOR;
 		case 104: return SCHOOL_BUS_COLOR;
 		case 117: return SCHOOL_BUS_COLOR;
+		case 150: return SCHOOL_BUS_COLOR;
+		case 151: return SCHOOL_BUS_COLOR;
+		case 152: return SCHOOL_BUS_COLOR;
+		case 153: return SCHOOL_BUS_COLOR;
 		case 180: return SCHOOL_BUS_COLOR;
 		//
 		case 311: return SCHOOL_BUS_COLOR;
@@ -668,6 +672,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					"Rosewood" //
 			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString("Rosewood", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (rsn == 151L) {
+			if (Arrays.asList( //
+					"Folkfest Prairieland", // <>
+					"Folkfest East" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Folkfest East", mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 1225L) {
