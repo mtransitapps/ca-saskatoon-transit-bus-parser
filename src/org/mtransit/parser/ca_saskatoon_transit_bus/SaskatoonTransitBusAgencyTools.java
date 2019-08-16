@@ -105,6 +105,18 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		return String.valueOf(Integer.parseInt(gRoute.getRouteShortName().trim())); // remove leading '0'
 	}
 
+	@Override
+	public String getRouteLongName(GRoute gRoute) {
+		return cleanRouteLongName(gRoute.getRouteLongName());
+	}
+
+	private String cleanRouteLongName(String routeLongName) {
+		if (Utils.isUppercaseOnly(routeLongName, true, true)) {
+			routeLongName = routeLongName.toLowerCase(Locale.ENGLISH);
+		}
+		return CleanUtils.cleanLabel(routeLongName);
+	}
+
 	private static final String AGENCY_COLOR_BLUE = "027AA7"; // BLUE (from web site CSS)
 
 	private static final String AGENCY_COLOR = AGENCY_COLOR_BLUE;
@@ -182,9 +194,11 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 153: return SCHOOL_BUS_COLOR;
 		case 180: return SCHOOL_BUS_COLOR;
 		//
+		case 305: return SCHOOL_BUS_COLOR;
 		case 311: return SCHOOL_BUS_COLOR;
 		case 314: return SCHOOL_BUS_COLOR;
 		case 315: return SCHOOL_BUS_COLOR;
+		case 316: return SCHOOL_BUS_COLOR;
 		case 322: return SCHOOL_BUS_COLOR;
 		case 325: return SCHOOL_BUS_COLOR;
 		case 331: return SCHOOL_BUS_COLOR;
