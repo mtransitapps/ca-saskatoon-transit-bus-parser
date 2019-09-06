@@ -439,7 +439,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 12l) {
+		} else if (rsn == 12L) {
 			if (Arrays.asList( //
 					AIRPORT, //
 					CITY_CENTER //
@@ -475,7 +475,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(NORTH_INDUSTRIAL, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 19l) {
+		} else if (rsn == 19L) {
 			if (Arrays.asList( //
 					CENTRE_MALL, //
 					MARKET_MALL //
@@ -490,7 +490,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 22l) {
+		} else if (rsn == 22L) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, // SAME
 					MONTGOMERY //
@@ -510,7 +510,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 23l) {
+		} else if (rsn == 23L) {
 			if (Arrays.asList( //
 					CONFEDERATION_TERMINAL, //
 					HAMPTON_VILLAGE //
@@ -550,14 +550,13 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (rsn == 30L) {
 			if (Arrays.asList( //
-					LAWSON_HEIGHTS, //
-					LAWSON_TERMINAL, //
-					CITY_CENTER //
+					CITY_CENTER, // <>
+					LAWSON_HEIGHTS //
 					).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				mTrip.setHeadsignString(LAWSON_HEIGHTS, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 35l) {
+		} else if (rsn == 35L) {
 			if (Arrays.asList( //
 					CITY_CENTER, //
 					LAWSON_HEIGHTS, //
@@ -566,15 +565,23 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 40l) {
+		} else if (rsn == 40L) {
 			if (Arrays.asList( //
-					CITY_CENTER, //
-					UNIVERSITY //
+					UNIVERSITY, //
+					CITY_CENTER //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (rsn == 45l) {
+		} else if (rsn == 44L) {
+			if (Arrays.asList( //
+					UNIVERSITY, //
+					CITY_CENTER //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (rsn == 45L) {
 			if (Arrays.asList( //
 					CITY_CENTER, //
 					GARAGE, //
