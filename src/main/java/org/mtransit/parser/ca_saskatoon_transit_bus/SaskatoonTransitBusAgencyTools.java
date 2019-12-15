@@ -394,26 +394,24 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 		} else if (rsn == 6L) {
-			if (isGoodEnoughAccepted()) {
-				if (mTrip.getHeadsignId() == 0) {
-					if (Arrays.asList( //
-							MARKET_MALL, // ==
-							BROADWAY, // ==
-							UNIVERSITY, // !=
-							CITY_CENTER // ==
-							).containsAll(headsignsValues)) {
-						mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
-						return true;
-					}
-				} else if (mTrip.getHeadsignId() == 1) {
-					if (Arrays.asList( //
-							CITY_CENTER, // ==
-							BROADWAY, // ==
-							MARKET_MALL // ==
-							).containsAll(headsignsValues)) {
-						mTrip.setHeadsignString(MARKET_MALL, mTrip.getHeadsignId());
-						return true;
-					}
+			if (mTrip.getHeadsignId() == 0) {
+				if (Arrays.asList( //
+						MARKET_MALL, // ==
+						BROADWAY, // ==
+						UNIVERSITY, // !=
+						CITY_CENTER // ==
+						).containsAll(headsignsValues)) {
+					mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
+					return true;
+				}
+			} else if (mTrip.getHeadsignId() == 1) {
+				if (Arrays.asList( //
+						CITY_CENTER, // ==
+						BROADWAY, // ==
+						MARKET_MALL // ==
+						).containsAll(headsignsValues)) {
+					mTrip.setHeadsignString(MARKET_MALL, mTrip.getHeadsignId());
+					return true;
 				}
 			}
 		} else if (rsn == 8L) {
@@ -701,6 +699,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					"Folkfest East" //
 			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString("Folkfest East", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (rsn == 336L) {
+			if (Arrays.asList( //
+					"Ctr Mall", //
+					"Ctr Mall Terminal" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Ctr Mall Terminal", mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 1225L) {
