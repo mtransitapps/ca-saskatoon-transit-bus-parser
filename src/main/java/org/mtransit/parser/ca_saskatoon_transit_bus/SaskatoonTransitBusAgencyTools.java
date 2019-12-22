@@ -47,7 +47,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	public void start(String[] args) {
 		System.out.printf("\nGenerating Saskatoon Transit bus data...");
 		long start = System.currentTimeMillis();
-		this.serviceIds = extractUsefulServiceIds(args, this);
+		this.serviceIds = extractUsefulServiceIds(args, this, true);
 		super.start(args);
 		System.out.printf("\nGenerating Saskatoon Transit bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
@@ -286,7 +286,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 								"3459", // Millar / 60th Street #NorthInd
 						})) //
 				.compileBothTripSort());
-		map2.put(10684L, new RouteTripSpec(10684L, // 25
+		map2.put(10822L, new RouteTripSpec(10822L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
@@ -427,6 +427,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					CENTRE_MALL //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CENTRE_MALL, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (rsn == 9L) {
+			if (Arrays.asList( //
+					"Riversdale", // <>
+					CITY_CENTER //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 10L) {
