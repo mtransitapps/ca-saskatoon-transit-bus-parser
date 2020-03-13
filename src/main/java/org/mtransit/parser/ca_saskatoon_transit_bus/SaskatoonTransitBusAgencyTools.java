@@ -267,7 +267,23 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(10751L, new RouteTripSpec(10751L, // 25
+		map2.put(10873L, new RouteTripSpec(10873L, // 08
+			0, MTrip.HEADSIGN_TYPE_STRING, "8th St", //
+			1, MTrip.HEADSIGN_TYPE_STRING, CITY_CENTER) //
+			.addTripSort(0, //
+					Arrays.asList(new String[] { //
+					"5901", // Downtown Terminal West
+							"3321", // ++
+							"5909", // Centre Mall Terminal O/B
+					})) //
+			.addTripSort(1, //
+					Arrays.asList(new String[] { //
+					"5910", // Centre Mall Terminal I/B
+							"3327", // ++
+							"5901", // Downtown Terminal West
+					})) //
+			.compileBothTripSort());
+		map2.put(10889L, new RouteTripSpec(10889L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
