@@ -283,7 +283,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 							"5901", // Downtown Terminal West
 					})) //
 			.compileBothTripSort());
-		map2.put(10889L, new RouteTripSpec(10889L, // 25
+		map2.put(11228L, new RouteTripSpec(11228L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
@@ -482,7 +482,15 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(BROADWAY, mTrip.getHeadsignId());
 				return true;
-			} else if (Arrays.asList( //
+			}
+			if (Arrays.asList( //
+					LAWSON_TERMINAL, //
+					LAWSON_HEIGHTS //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(LAWSON_HEIGHTS, mTrip.getHeadsignId());
+				return true;
+			}
+			if (Arrays.asList( //
 					UNIVERSITY, //
 					LAWSON_HEIGHTS_TERMINAL, //
 					LAWSON_HEIGHTS //
