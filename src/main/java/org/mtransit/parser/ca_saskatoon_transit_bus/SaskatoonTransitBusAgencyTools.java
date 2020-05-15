@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.DefaultAgencyTools;
+import org.mtransit.parser.MTLog;
 import org.mtransit.parser.Pair;
 import org.mtransit.parser.SplitUtils;
 import org.mtransit.parser.SplitUtils.RouteTripSpec;
@@ -45,11 +46,11 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public void start(String[] args) {
-		System.out.printf("\nGenerating Saskatoon Transit bus data...");
+		MTLog.log("Generating Saskatoon Transit bus data...");
 		long start = System.currentTimeMillis();
 		this.serviceIds = extractUsefulServiceIds(args, this, true);
 		super.start(args);
-		System.out.printf("\nGenerating Saskatoon Transit bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+		MTLog.log("Generating Saskatoon Transit bus data... DONE in %s.", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
 
 	@Override
@@ -227,8 +228,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 1225: return null;
 		// @formatter:on
 		default:
-			System.out.printf("\nUnexpected route color %s!\n", gRoute);
-			System.exit(-1);
+			MTLog.logFatal("Unexpected route color %s!", gRoute);
 			return null;
 		}
 	}
@@ -267,22 +267,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(10873L, new RouteTripSpec(10873L, // 08
-			0, MTrip.HEADSIGN_TYPE_STRING, "8th St", //
-			1, MTrip.HEADSIGN_TYPE_STRING, CITY_CENTER) //
-			.addTripSort(0, //
-					Arrays.asList(new String[] { //
-					"5901", // Downtown Terminal West
-							"3321", // ++
-							"5909", // Centre Mall Terminal O/B
-					})) //
-			.addTripSort(1, //
-					Arrays.asList(new String[] { //
-					"5910", // Centre Mall Terminal I/B
-							"3327", // ++
-							"5901", // Downtown Terminal West
-					})) //
-			.compileBothTripSort());
 		map2.put(11228L, new RouteTripSpec(11228L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
@@ -302,7 +286,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 								"3459", // Millar / 60th Street #NorthInd
 						})) //
 				.compileBothTripSort());
-		map2.put(10822L, new RouteTripSpec(10822L, // 25
+		map2.put(11295L, new RouteTripSpec(11295L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
@@ -765,8 +749,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				}
 			}
 		}
-		System.out.printf("\n%s: Unexpected trips to merge %s and %s.\n", rsn, mTrip, mTripToMerge);
-		System.exit(-1);
+		MTLog.logFatal("%s: Unexpected trips to merge %s and %s.", rsn, mTrip, mTripToMerge);
 		return false;
 	}
 
@@ -814,9 +797,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		try {
 			return Integer.parseInt(gStop.getStopCode()); // use stop code as stop ID
 		} catch (Exception e) {
-			System.out.println("Error while extracting stop ID from " + gStop);
-			e.printStackTrace();
-			System.exit(-1);
+			MTLog.logFatal(e, "Error while extracting stop ID from " + gStop);
 			return -1;
 		}
 	}
