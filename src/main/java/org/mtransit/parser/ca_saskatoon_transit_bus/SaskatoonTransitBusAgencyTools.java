@@ -352,7 +352,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			return true;
 		}
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
-		long rsn = routeIdsToShortName.get(mTrip.getRouteId()); // mTrip.getRouteId()
+		long rsn = routeIdsToShortName.get(mTrip.getRouteId());
 		if (rsn == 4L) {
 			if (Arrays.asList( //
 					UNIVERSITY, //
@@ -655,18 +655,16 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (rsn == 65L) {
 			if (Arrays.asList( //
-					CITY_CENTER, // ==
-					CONFEDERATION_TERMINAL, // ==
+					CONFEDERATION, //
 					KENSINGTON //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(KENSINGTON, mTrip.getHeadsignId());
 				return true;
 			} else if (Arrays.asList( //
-					CITY_CENTER, // ==
-					CONFEDERATION_TERMINAL, // ==
-					UNIVERSITY //
+					CONFEDERATION_TERMINAL, //
+					CITY_CENTER //
 					).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString(UNIVERSITY, mTrip.getHeadsignId());
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 81L) {
