@@ -174,6 +174,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 61: return null;
 		case 62: return null;
 		case 63: return null;
+		case 64: return null;
 		case 65: return null;
 		case 70: return COLOR_DART_GREEN;
 		case 75: return null;
@@ -267,7 +268,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(11228L, new RouteTripSpec(11228L, // 25
+		map2.put(11341L, new RouteTripSpec(11341L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
@@ -342,6 +343,15 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
+		}
+		long rsn = routeIdsToShortName.get(mTrip.getRouteId());
+		if (rsn == 8L) {
+			if (gTrip.getTripHeadsign().trim().isEmpty()) {
+				if (mTrip.getRouteId() == 11325L && gTrip.getDirectionId() == 1) {
+					mTrip.setHeadsignString("City Ctr", gTrip.getDirectionId());
+					return;
+				}
+			}
 		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
@@ -461,13 +471,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (rsn == 13L) {
 			if (Arrays.asList( //
-					BROADWAY, //
-					UNIVERSITY //
+					UNIVERSITY, // <>
+					BROADWAY //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(BROADWAY, mTrip.getHeadsignId());
 				return true;
 			}
 			if (Arrays.asList( //
+					UNIVERSITY, // <>
 					LAWSON_TERMINAL, //
 					LAWSON_HEIGHTS //
 					).containsAll(headsignsValues)) {
@@ -475,7 +486,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 			if (Arrays.asList( //
-					UNIVERSITY, //
+					UNIVERSITY, // <>
 					LAWSON_HEIGHTS_TERMINAL, //
 					LAWSON_HEIGHTS //
 					).containsAll(headsignsValues)) {
@@ -651,6 +662,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 					HAMPTON_VILLAGE //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(HAMPTON_VILLAGE, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (rsn == 64L) {
+			if (Arrays.asList( //
+					CONFEDERATION_TERMINAL, //
+					CITY_CENTER //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 65L) {
