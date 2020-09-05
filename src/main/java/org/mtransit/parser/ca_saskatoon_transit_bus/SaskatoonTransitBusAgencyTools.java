@@ -675,12 +675,14 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		} else if (rsn == 65L) {
 			if (Arrays.asList( //
 					CONFEDERATION, //
+					CONFEDERATION_TERMINAL, // <>
 					KENSINGTON //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(KENSINGTON, mTrip.getHeadsignId());
 				return true;
-			} else if (Arrays.asList( //
-					CONFEDERATION_TERMINAL, //
+			}
+			if (Arrays.asList( //
+					CONFEDERATION_TERMINAL, // <>
 					CITY_CENTER //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(CITY_CENTER, mTrip.getHeadsignId());
