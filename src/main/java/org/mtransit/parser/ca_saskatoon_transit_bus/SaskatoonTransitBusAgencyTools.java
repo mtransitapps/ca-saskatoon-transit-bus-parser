@@ -287,7 +287,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 								"3459", // Millar / 60th Street #NorthInd
 						})) //
 				.compileBothTripSort());
-		map2.put(11295L, new RouteTripSpec(11295L, // 25
+		map2.put(11410L, new RouteTripSpec(11410L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
