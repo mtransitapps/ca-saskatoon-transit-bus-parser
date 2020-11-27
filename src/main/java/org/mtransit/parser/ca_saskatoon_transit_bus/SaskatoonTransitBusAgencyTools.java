@@ -93,7 +93,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		return MAgency.ROUTE_TYPE_BUS;
 	}
 
-	private HashMap<Long, Long> routeIdsToShortName = new HashMap<Long, Long>();
+	private final HashMap<Long, Long> routeIdsToShortName = new HashMap<>();
 
 	@Override
 	public long getRouteId(GRoute gRoute) {
@@ -229,8 +229,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		case 1225: return null;
 		// @formatter:on
 		default:
-			MTLog.logFatal("Unexpected route color %s!", gRoute);
-			return null;
+			throw new MTLog.Fatal("Unexpected route color %s!", gRoute.toStringPlus());
 		}
 	}
 
@@ -265,46 +264,46 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String NORTH_INDUSTRIAL = "North Ind";
 	private static final String SASK_TEL_CENTER = "Sask Tel Ctr";
 
-	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
+	private static final HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
-		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
 		map2.put(11341L, new RouteTripSpec(11341L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
-						Arrays.asList(new String[] { //
+						Arrays.asList( //
 						"3459", // Millar / 60th Street #NorthInd
 								"3346", // ++
-								"5588", // Apex / Bill Hunter #SaskTelCtr
-						})) //
+								"5588" // Apex / Bill Hunter #SaskTelCtr
+						)) //
 				.addTripSort(1, //
-						Arrays.asList(new String[] { //
+						Arrays.asList( //
 						"5588", // Apex / Bill Hunter #SaskTelCtr
 								"5573", // ==
 								"3804", // !=
 								"4381", // !=
 								"4440", // ==
-								"3459", // Millar / 60th Street #NorthInd
-						})) //
+								"3459" // Millar / 60th Street #NorthInd
+						)) //
 				.compileBothTripSort());
 		map2.put(11410L, new RouteTripSpec(11410L, // 25
 				0, MTrip.HEADSIGN_TYPE_STRING, SASK_TEL_CENTER, //
 				1, MTrip.HEADSIGN_TYPE_STRING, NORTH_INDUSTRIAL) //
 				.addTripSort(0, //
-						Arrays.asList(new String[] { //
+						Arrays.asList( //
 						"3459", // Millar / 60th Street #NorthInd
 								"3346", // ++
-								"5588", // Apex / Bill Hunter #SaskTelCtr
-						})) //
+								"5588" // Apex / Bill Hunter #SaskTelCtr
+						)) //
 				.addTripSort(1, //
-						Arrays.asList(new String[] { //
+						Arrays.asList( //
 						"5588", // Apex / Bill Hunter #SaskTelCtr
 								"5573", // ==
 								"3804", // !=
 								"4381", // !=
 								"4440", // ==
-								"3459", // Millar / 60th Street #NorthInd
-						})) //
+								"3459" // Millar / 60th Street #NorthInd
+						)) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
@@ -347,13 +346,16 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		long rsn = routeIdsToShortName.get(mTrip.getRouteId());
 		if (rsn == 8L) {
 			if (gTrip.getTripHeadsign().trim().isEmpty()) {
-				if (mTrip.getRouteId() == 11325L && gTrip.getDirectionId() == 1) {
-					mTrip.setHeadsignString("City Ctr", gTrip.getDirectionId());
+				if (mTrip.getRouteId() == 11325L && gTrip.getDirectionIdOrDefault() == 1) {
+					mTrip.setHeadsignString("City Ctr", gTrip.getDirectionIdOrDefault());
 					return;
 				}
 			}
 		}
-		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
+		mTrip.setHeadsignString(
+			cleanTripHeadsign(gTrip.getTripHeadsign()),
+			gTrip.getDirectionIdOrDefault()
+		);
 	}
 
 	@Override
@@ -750,6 +752,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 						"JBE Mkt Mall", // <>
 						"JBE Downtown", // <>
 						"JBE Ctr Mall", // <>
+						"JBE - Ctr Mall", // <>
+						"JBE- Mkt Mall", // <>
 						"CCW" // ++
 				).containsAll(headsignsValues)) {
 					mTrip.setHeadsignString("CCW", mTrip.getHeadsignId());
@@ -760,6 +764,9 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 						"JBE Mkt Mall", // <>
 						"JBE Downtown", // <>
 						"JBE Ctr Mall", // <>
+						"JBE - Ctr Mall", // <>
+						"JBE- Mkt Mall", // <>
+						"JBE - Mkt Mall", //
 						"Ctr Mall", //
 						"CW" // ++
 				).containsAll(headsignsValues)) {
@@ -768,14 +775,11 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 				}
 			}
 		}
-		MTLog.logFatal("%s: Unexpected trips to merge %s and %s.", rsn, mTrip, mTripToMerge);
-		return false;
+		throw new MTLog.Fatal("%s: Unexpected trips to merge %s and %s.", rsn, mTrip, mTripToMerge);
 	}
 
-	private static final String VIA = " via ";
-
 	private static final Pattern INDUSTRIAL = Pattern.compile("((^|\\W){1}(industrial)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
-	private static final String INDUSTRIAL_REPLACEMENT = "$2Ind$4";
+	private static final String INDUSTRIAL_REPLACEMENT = "$2" + "Ind" + "$4";
 
 	private static final Pattern FOREST_GROVE_ = Pattern.compile("((^|\\W){1}(forestgrove)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String FOREST_GROVE_REPLACEMENT = "$2" + FOREST_GROVE + "$4";
@@ -784,22 +788,19 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String CITY_REPLACEMENT = "$2" + CITY + "$4";
 
 	private static final Pattern CENTRE_ = Pattern.compile("((^|\\W){1}(cenrtre)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
-	private static final String CENTRE_REPLACEMENT = "$2Ctr$4";
+	private static final String CENTRE_REPLACEMENT = "$2" + "Centre" + "$4";
 
 	private static final Pattern CONFEDERATION_ = Pattern.compile("((^|\\W){1}(confederartion)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String CONFEDERATION_REPLACEMENT = "$2" + CONFEDERATION + "$4";
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
-		int indexOfVIA = tripHeadsign.toLowerCase(Locale.ENGLISH).indexOf(VIA);
-		if (indexOfVIA >= 0) {
-			tripHeadsign = tripHeadsign.substring(0, indexOfVIA);
-		}
 		tripHeadsign = INDUSTRIAL.matcher(tripHeadsign).replaceAll(INDUSTRIAL_REPLACEMENT);
 		tripHeadsign = CONFEDERATION_.matcher(tripHeadsign).replaceAll(CONFEDERATION_REPLACEMENT);
 		tripHeadsign = FOREST_GROVE_.matcher(tripHeadsign).replaceAll(FOREST_GROVE_REPLACEMENT);
 		tripHeadsign = CITY_.matcher(tripHeadsign).replaceAll(CITY_REPLACEMENT);
 		tripHeadsign = CENTRE_.matcher(tripHeadsign).replaceAll(CENTRE_REPLACEMENT);
+		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
@@ -816,8 +817,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		try {
 			return Integer.parseInt(gStop.getStopCode()); // use stop code as stop ID
 		} catch (Exception e) {
-			MTLog.logFatal(e, "Error while extracting stop ID from " + gStop);
-			return -1;
+			throw new MTLog.Fatal(e, "Error while extracting stop ID from " + gStop);
 		}
 	}
 }
