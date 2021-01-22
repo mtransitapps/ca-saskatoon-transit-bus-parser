@@ -250,8 +250,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String AIRPORT = "Airport";
 	private static final String LAWSON = "Lawson";
 	private static final String LAWSON_HEIGHTS = LAWSON + " Hts";
-	private static final String LAWSON_HEIGHTS_TERMINAL = LAWSON_HEIGHTS + " Terminal";
-	private static final String LAWSON_TERMINAL = LAWSON + " Terminal";
+	private static final String LAWSON_HEIGHTS_TERMINAL = LAWSON_HEIGHTS + " Term";
+	private static final String LAWSON_TERMINAL = LAWSON + " Term";
 	private static final String BROADWAY = "Broadway";
 	private static final String STONEBRIDGE = "Stonebridge";
 	private static final String MARKET_MALL = "Mkt Mall";
@@ -260,7 +260,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String BLAIRMORE = "Blairmore";
 	private static final String UNIVERSITY = "University";
 	private static final String CONFEDERATION = "Confederation";
-	private static final String CONFEDERATION_TERMINAL = CONFEDERATION + " Terminal";
+	private static final String CONFEDERATION_TERMINAL = CONFEDERATION + " Term";
 	private static final String HAMPTON_VILLAGE = "Hampton Vlg";
 	private static final String DOWNTOWN = "Downtown";
 	private static final String CITY = "City";
@@ -756,9 +756,9 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		} else if (rsn == 336L) {
 			if (Arrays.asList( //
 					"Ctr Mall", //
-					"Ctr Mall Terminal" //
+					"Ctr Mall Term" //
 			).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString("Ctr Mall Terminal", mTrip.getHeadsignId());
+				mTrip.setHeadsignString("Ctr Mall Term", mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (rsn == 1225L) {
@@ -793,9 +793,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 		throw new MTLog.Fatal("%s: Unexpected trips to merge %s and %s.", rsn, mTrip, mTripToMerge);
 	}
 
-	private static final Pattern INDUSTRIAL_ = Pattern.compile("((^|\\W)(industrial)(\\W|$))", Pattern.CASE_INSENSITIVE);
-	private static final String INDUSTRIAL_REPLACEMENT = "$2" + "Ind" + "$4";
-
 	private static final Pattern FIX_FOREST_GROVE_ = Pattern.compile("((^|\\W)(forestgrove)(\\W|$))", Pattern.CASE_INSENSITIVE);
 	private static final String FIX_FOREST_GROVE_REPLACEMENT = "$2" + FOREST_GROVE + "$4";
 
@@ -811,12 +808,12 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	@NotNull
 	@Override
 	public String cleanTripHeadsign(@NotNull String tripHeadsign) {
-		tripHeadsign = INDUSTRIAL_.matcher(tripHeadsign).replaceAll(INDUSTRIAL_REPLACEMENT);
 		tripHeadsign = FIX_CONFEDERATION_.matcher(tripHeadsign).replaceAll(FIX_CONFEDERATION_REPLACEMENT);
 		tripHeadsign = FIX_FOREST_GROVE_.matcher(tripHeadsign).replaceAll(FIX_FOREST_GROVE_REPLACEMENT);
 		tripHeadsign = FIX_CITY_.matcher(tripHeadsign).replaceAll(FIX_CITY_REPLACEMENT);
 		tripHeadsign = FIX_CENTRE_.matcher(tripHeadsign).replaceAll(FIX_CENTRE_REPLACEMENT);
 		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
+		tripHeadsign = CleanUtils.cleanBounds(tripHeadsign);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
@@ -824,6 +821,7 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	@NotNull
 	@Override
 	public String cleanStopName(@NotNull String gStopName) {
+		gStopName = CleanUtils.cleanBounds(gStopName);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		gStopName = CleanUtils.cleanNumbers(gStopName);
 		return CleanUtils.cleanLabel(gStopName);
