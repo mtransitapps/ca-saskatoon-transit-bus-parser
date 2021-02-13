@@ -2,7 +2,7 @@ package org.mtransit.parser.ca_saskatoon_transit_bus;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mtransit.parser.CleanUtils;
+import org.mtransit.commons.CleanUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.MTLog;
 import org.mtransit.parser.Utils;
@@ -108,14 +108,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@NotNull
 	@Override
-	public String getRouteLongName(@NotNull GRoute gRoute) {
-		return cleanRouteLongName(gRoute.getRouteLongName());
-	}
-
-	private String cleanRouteLongName(String routeLongName) {
-		if (Utils.isUppercaseOnly(routeLongName, true, true)) {
-			routeLongName = routeLongName.toLowerCase(Locale.ENGLISH);
-		}
+	public String cleanRouteLongName(String routeLongName) {
+		routeLongName = CleanUtils.toLowerCaseUpperCaseWords(Locale.ENGLISH, routeLongName);
 		return CleanUtils.cleanLabel(routeLongName);
 	}
 
@@ -255,11 +249,6 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public boolean directionFinderEnabled() {
 		return true;
-	}
-
-	@Override
-	public boolean mergeHeadsign(@NotNull MTrip mTrip, @NotNull MTrip mTripToMerge) {
-		throw new MTLog.Fatal("Unexpected trips to merge %s and %s.", mTrip, mTripToMerge);
 	}
 
 	private static final String FOREST_GROVE = "Forest Grv";
