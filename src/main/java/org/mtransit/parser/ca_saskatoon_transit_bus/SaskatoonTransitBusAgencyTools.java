@@ -225,27 +225,8 @@ public class SaskatoonTransitBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public boolean directionFinderEnabled(long routeId, @NotNull GRoute gRoute) {
-		if (routeId == 12137L) { // 06
-			return false;
-		}
-		return directionFinderEnabled();
-	}
-
-	@Override
 	public boolean directionFinderEnabled() {
 		return true;
-	}
-
-	@Override
-	public boolean mergeHeadsign(@NotNull MTrip mTrip, @NotNull MTrip mTripToMerge) {
-		final Long routeId = mTrip.getRouteId();
-		if (mTrip.getRouteId() == 12137L) { // 06
-			if (MTrip.mergeEmpty(mTrip, mTripToMerge)) {
-				return true;
-			}
-		}
-		return super.mergeHeadsign(mTrip, mTripToMerge);
 	}
 
 	private static final Pattern FIX_FOREST_GROVE_ = Pattern.compile("((^|\\W)(forestgrove)(\\W|$))", Pattern.CASE_INSENSITIVE);
